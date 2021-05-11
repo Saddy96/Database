@@ -1,0 +1,173 @@
+SQL Assignments:
+Tasks:
+1. 
+Table Member:
+
+create table Member
+(
+	Member_Id Number(5),
+	Member_Name Varchar2(30),
+	Member_address Varchar2(50),
+	Acc_Open_Date Date,
+	Membership_type Varchar2(20),
+	Fees_paid Number(4),
+	Max_Books_Allowed Number(2),
+	Penalty_Amount Number(7,2)
+);
+
+Table Books-
+create table Books
+(
+	Book_No Number(6),
+	Book_Name VarChar2(30),
+	Author_name Varchar2(30),
+	Cost Number(7,2),
+	Category Char(10)
+);
+
+Issue:
+create table Issue
+(
+	Lib_Issue_Id Number(10),
+	Book_No Number(6),
+	Member_Id Number(5),
+	Issue_Date Date,
+	Return_date Date
+);
+
+2. 
+desc Member;
+desc Books;
+desc Issue;
+
+3
+drop table Member;
+drop table Books;
+drop table Issue;
+
+4
+Table Member:
+
+create table Member
+(
+	Member_Id Number(5) constraint pk_no_mem_tb primary key,
+	Member_Name Varchar2(30),
+	Member_address Varchar2(50),
+	Acc_Open_Date Date,
+	Membership_type Varchar2(20) constraint 
+		check_mem_type check(Membership_type in 
+					('Lifetime’, 'Annual’, 'Half Yearly’, 'Quarterly’)
+					),
+	Fees_paid Number(4),
+	Max_Books_Allowed Number(2),
+	Penalty_Amount Number(7,2)
+);
+
+5 Already there in the ques
+
+6
+create table Issue
+(
+	Lib_Issue_Id Number(10),
+	Book_No Number(6),
+	Member_Id Number(5),
+	Issue_Date Date,
+	Return_date Date,
+	Reference char(30)
+);
+
+7
+alter table Issue drop column Reference;
+
+8.
+alter table Issue rename to Lib_Issue;
+
+9.
+insert into Member values(1, 'Richa Sharma', 'Pune', '10-Dec-05', 'Lifetime', 2500, 5, 50);
+insert into Member values(2, 'Garima Sen', 'Pune', sysdate, 'Annual', 1000, 3, null);
+
+Note: 
+sequence:
+create sequence seq_member_id;
+
+10.
+insert into Member values(seq_member_id.NEXTVAL, 'Kim Sharma', 'Bangalore', '10-Mar-15', 'Annual', 3899, 7, 745.50);
+insert into Member values(seq_member_id.NEXTVAL, 'John Snow', 'Winterfall', sysdate, 'Quarterly', 4856, 3, 500.45);
+Note:
+Error
+insert into Member values(seq_member_id.NEXTVAL, 'John Snow', 'Winterfall', sysdate, 'Yearly', 4856, 3, 500.45);
+
+insert into Member values(5, 'Danerys', 'Essos', '28-June-17', 'Annual', 7548, 7, 458.50);
+
+Update column data:
+update Member set MEMBERSHIP_TYPE = 'Half Yearly' where MEMBER_ID = 5;
+
+DROP SEQUENCE oe.customers_seq; 
+
+11.
+alter table Member modify MEMBER_NAME varchar2(20);
+
+12.
+insert into Member values(6, 'Arya', 'WF', '14-Dec-19', 'Quarterly', 4527, 110, 200);
+
+ANS: ERROR as the defined data type was having 2 digit if value but we have mentioned 3  digit no.
+
+13.
+create table Member101 as (select * from Member);
+desc Member101;
+
+14.
+	a. alter table Member101 add constraint max_bk_ald_const check(Max_Books_Allowed < 100);
+	b. alter table Member101 add constraint mx_pnlamt_const check(Penalty_Amount <= 1000);
+
+15.
+drop table Books;
+(Books table has already been dropped)
+
+16.
+create table Books
+(
+	Book_No Number(6) constraint bkg_no_const primary key,
+	Book_Name VarChar2(30) constraint bl_name not null,
+	Author_name Varchar2(30),
+	Cost Number(7,2),
+	Category Char(10) constraint cat_type_list_constr check(Category in ('Science', 'Fiction', 'Database', 'RDBMS', 'Others'))
+);
+
+17.
+insert into Books values(101, 'Let us C', 'Denis Ritchie', 450, 'Others');
+* Changed the category type from system to others as per the category constraint.
+
+insert into Books values(102, 'Oracle – Complete Ref', 'Loni', 550, 'Database');
+insert into Books values(103, 'Mastering SQL', 'Loni', 250, 'Database');
+insert into Books values(104, 'PL SQL-Ref', 'Scott Urman', 750, 'Database');
+
+18. ask doubt
+insert into Books values(105, 'Management Science', 'Rony', 945, 'Science'), (106, 'The Alchemist', 'Paulo', 999, 'Fiction');
+Didn't work;
+
+19.
+create table Book101 as select * from Books where 1=0;
+desc Book101;
+create table Book101 as select * from Books with no data;
+
+20.
+insert into Book101 select * from Books;
+
+21.
+commit;
+
+22. 
+select * from Books;
+select * from Member;
+select * from Member101;
+select * from Lib_Issue;
+select * from Book101;
+select Book_No, Book_Name from Book101;
+ 
+23.
+insert into Books values (105, 'National Geographic', 'Adis Scott', 1000, 'Science');
+
+24.
+select * from Books;
+rollback
