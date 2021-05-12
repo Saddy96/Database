@@ -1,0 +1,156 @@
+1. 
+create table Employee_Info
+		(
+			Employee_Id number(5) constraint emp_id_p_key primary key,
+			Employee_Name varchar2(10),
+			DOJ Date,
+			Employee_Address varchar2(15),
+			Phone_Num number(10),
+			Salary number(10)					
+		);
+
+
+create table employee_info(Employee_Id number(5) primary key, employee_name varchar2(10), DoJ Date, employee_address varchar(15), phone_num number(10), salary number(10));
+
+insert into employee_info values(10101, ‘Rohit’, TO_DATE(‘2015-07-17’,'YYYY-DD-MM),’Add123’, 99999999,250000);
+
+
+
+insert into Employee_Info values(101, 'Amit',TO_DATE('2010/12/12','yyyy/mm/dd'),'E_Address_1', 123456789, 54678);
+insert into Employee_Info values(102, 'Tejas',TO_DATE('2010/05/12','yyyy/mm/dd'),'E_Address_2', 12568792, 12568);
+insert into Employee_Info values(103, 'Ram',TO_DATE('2010/05/06','yyyy/mm/dd'),'E_Address_3', 784567892, 17868);
+insert into Employee_Info values(104, 'Tim',TO_DATE('2010/03/05','yyyy/mm/dd'),'E_Address_4', 124566789, 1000);
+insert into Employee_Info values(105, 'Jim',TO_DATE('2010/02/08','yyyy/mm/dd'),'E_Address_5', 1235789, 78000);
+insert into Employee_Info values(106, 'Rim',TO_DATE('2010/06/08','yyyy/mm/dd'),'E_Address_6', 12375789, 74500);
+
+create table Department_info
+		(
+			Depart_Id number(5) constraint dept_id_p_key primary key,
+			Department_Name varchar2(10),
+			Company_Address varchar2(20),
+			Employee_id number(5)					
+		);
+
+insert into Department_info values(104, 'D101', 'C_Address_1',102);
+insert into Department_info values(145, 'D102', 'C_Address_2',101);
+insert into Department_info values(103, 'D103', 'C_Address_3',104);
+insert into Department_info values(125, 'D104', 'C_Address_4',105);
+insert into Department_info values(128, 'D105', 'C_Address_5',103);
+insert into Department_info values(129, 'D106', 'C_Address_6',108);
+
+select e.Employee_Id, e.Employee_Name, e.DOJ, e.Employee_Address, e.Phone_Num, e.Salary, d.Depart_Id, d.Department_Name, d.Company_Address, d.Employee_id from Employee_Info e full outer join Department_info d on e.Employee_Id = d.Employee_Id;
+
+select e.Employee_Id, e.Employee_Name, e.DOJ, e.Employee_Address, e.Phone_Num, e.Salary, d.Depart_Id, d.Department_Name, d.Company_Address, d.Employee_id from Employee_Info e left join Department_info d on e.Employee_Id = d.Employee_Id;
+
+select e.Employee_Id, e.Employee_Name, e.DOJ, e.Employee_Address, e.Phone_Num, e.Salary, d.Depart_Id, d.Department_Name, d.Company_Address, d.Employee_id from Employee_Info e right join Department_info d on e.Employee_Id = d.Employee_Id;
+
+
+create table Student_Info 
+		(
+			Rollno number(4),
+			Marks number(3),
+			Student_address varchar(10),
+			Course_Id number(5),
+			Student_name varchar(15)
+		);
+
+insert into Student_Info values (0001,89, 'ST_Addr_1', 11, 'Linn');
+insert into Student_Info values (0002,58, 'ST_Addr_2', 15, 'Tim');
+insert into Student_Info values (0003,67, 'ST_Addr_3', 16, 'Jim');
+insert into Student_Info values (0004,96, 'ST_Addr_4', 18, 'SRK');
+insert into Student_Info values (0005,92, 'ST_Addr_5', 22, 'Jack');
+insert into Student_Info values (0006,79, 'ST_Addr_6', 08, 'Smith');
+
+create table Student_Info1 
+		(
+			Rollno number(4),
+			Marks number(3),
+			Student_address varchar(10),
+			Course_Id number(5),
+			Student_name varchar(15)
+		);
+
+insert into Student_Info1 values (0002,58, 'ST_Addr_2', 15, 'Tim');
+insert into Student_Info1 values (0007,97, 'ST_Addr_7', 35, 'Meril');
+insert into Student_Info1 values (0008,89, 'ST_Addr_8', 42, 'Domm');
+insert into Student_Info1 values (0005,92, 'ST_Addr_5', 22, 'Jack');
+insert into Student_Info1 values (0009,64, 'ST_Addr_9', 58, 'Rahul');
+insert into Student_Info1 values (0010,64, 'ST_Addr_10', 02, 'Steve');
+insert into Student_Info1 values (0003,67, 'ST_Addr_3', 16, 'Jim');
+
+
+select * from Student_Info union select * from Student_Info1;
+
+select * from Student_Info union all select * from Student_Info1;
+
+
+select * from Student_Info where Marks > 85 union select * from Student_Info1 where Marks > 85;
+
+select * from Student_Info where Marks > 85 union all select * from Student_Info1 where Marks > 85;
+
+
+create table Student_Info2 
+		(
+			Rollno number(4),
+			Marks number(3),
+			Student_address varchar(10),
+			Course_Id number(5),
+			Course_details varchar(30),
+			Course_Name Varchar2 (20),
+			Student_name varchar(15)
+		);
+
+insert into Student_Info2 values (0001,89, 'ST_Addr_1', 11, 'Eng',  'BTECH', 'Linn');
+insert into Student_Info2 values (0002,58, 'ST_Addr_2', 15, 'Arts',  'MBA', 'Meril');
+insert into Student_Info2 values (0003,67, 'ST_Addr_3', 16, 'BA Course 1',  'MBA', 'Domm');
+insert into Student_Info2 values (0004,96, 'ST_Addr_4', 18, 'BA Course 2',  'MBA', 'Jack');
+insert into Student_Info2 values (0005,92, 'ST_Addr_5', 22, 'BA Course 3',  'MBA', 'Steve');
+insert into Student_Info2 values (0006,79, 'ST_Addr_6', 08, 'Arts B Course 1',  'BA', 'Smith');
+
+create table Student_Info3 
+		(
+			Rollno number(4),
+			Marks number(3),
+			Student_address varchar(10),
+			Course_Id number(5),
+			Course_details varchar(30),
+			Course_Name Varchar2 (20),
+			Student_name varchar(15)
+		);
+
+insert into Student_Info3 values (0002,58, 'ST_Addr_2', 15, 'Arts',  'MBA', 'Meril');
+insert into Student_Info3 values (0007,97, 'ST_Addr_7', 38, 'Arts',  'MBA', 'Tim');
+insert into Student_Info3 values (0008,89, 'ST_Addr_8', 26, 'Arts',  'MBA', 'Jim');
+insert into Student_Info3 values (0005,92, 'ST_Addr_5', 22, 'BA Course 3',  'MBA', 'Steve');
+insert into Student_Info3 values (0009,64, 'ST_Addr_9', 19, 'Arts',  'MBA', 'Rahul');
+insert into Student_Info3 values (0010,82, 'ST_Addr_10', 68, 'Commerce',  'BCOM', 'Don');
+insert into Student_Info3 values (0003,67, 'ST_Addr_3', 16, 'BA Course 1',  'MBA', 'John');
+
+select * from Student_Info2 union select * from Student_Info3;
+
+select * from Student_Info2 where Marks > 85 and Course_Name = 'MBA' union select * from Student_Info3 where Marks > 85 and Course_Name = 'MBA';
+
+
+set serveroutput on;
+
+DECLARE
+a1 number;
+b1 number;
+c1 number;
+PROCEDURE findMax(x1 IN number, y1 IN number, z OUT number) IS
+BEGIN
+  IF x1>y1 THEN
+	z:=x1;
+  Else
+	z:=y1;
+  END IF;
+END;
+
+BEGIN
+ a1 := 102;
+ b1 := 68;
+ findMax(a1,b1,c1);
+ dbms_output.put_line('Maximum of the two given number is :' ||c1);
+END;
+/
+
