@@ -1,0 +1,81 @@
+Always Airlines Table will be considered as the first one.
+
+Step 1: Dropping table "Airlines" and creating the same table. Reference Keys are not being considered here.
+drop table Airlines cascade constraints;
+create table Airlines
+		(
+			Airline_ID number(2) constraint airline_id_p_key primary key,
+			Name char(10),
+			Total_Employees number(2),
+			Total_Flights number(2),
+			Emergency_Flight char(12)					
+		);
+
+Step 2: Dropping table "Flights" and creating the same table. Reference Keys are not being considered here.
+drop table Flights cascade constraints;
+create table Flights
+		(
+			Flight_ID char(7) constraint flight_id_p_key primary key,
+			Trips_per_Day number(1),
+			Flight_Type char(15),
+			Avg_Maint_Time number(3),
+			Capacity number(3),
+			Crew_Members number(2),
+			Airline_ID Number(2),
+			Route_ID char(10)			
+		);
+
+Step 3: Dropping table "Routes" and creating the same table. Reference Keys are not being considered here.
+drop table Routes cascade constraints;
+create table Routes
+		(
+			Route_ID char(10) constraint route_id_p_key primary key,
+			Source varchar2(15),
+			Destination varchar2(15),
+			Base_Fare number(5),
+			Airline_ID Number(2),
+			Flight_ID char(7)		 
+		);
+
+Step 4: Dropping table "Pilots" and creating the same table. Reference Keys are not being considered here.
+drop table Pilots cascade constraints;
+create table Pilots
+		(
+			Pilot_ID char(10) constraint pilot_id_p_key primary key,
+			First_Name char(10),
+			Last_Name char(10),
+			College_Name char(5),
+			College_Address varchar(100),
+			Airline_ID Number(2)			
+		);
+
+Step 5: Adding Reference Keys in the Flights Table
+alter table Flights add constraint airline_id foreign key(Airline_ID) references Airlines;
+alter table Flights add constraint route_id foreign key(Route_ID) references Routes;
+
+Step 6: Adding Reference Keys in the Routes Table
+alter table Routes add constraint airline_id_ref_key foreign key(Airline_ID) references Airlines;
+alter table Routes add constraint flight_id_ref_key foreign key(Flight_ID) references Flights;
+
+Step 7: Adding Reference Key in the Pilots Table
+alter table Pilots add constraint ref_key_airline_id foreign key(Airline_ID) references Airlines;
+
+Step 8: Adding Reference Key in the Airlines Table
+alter table Airlines add constraint emer_flight_id foreign key(Emergency_Flight) references Flights;
+
+Step 9: Inserting values in respective tables
+INSERT INTO Airlines VALUES(1,'IndiGo',20,2, Null);
+INSERT INTO Pilots VALUES('MM_5012','Mishkhat','Malhotra','ABC', '19 Sun Plaza, G N Chty Rd Mount Rd',1);
+INSERT INTO ROUTES VALUES('BLR_DEL1','Bangalore','Delhi',2248, 1,'Ind103');
+INSERT INTO Flights VALUES('Ind103',1,'Passenger',120, 240,14,1,'BLR_DEL1');
+
+Step 10: Updating the null value of Airlines Table
+update Airlines set Emergency_Flight = 'Ind103' where Airline_ID = 1;
+
+set linesize 120;
+
+Step 11: Quering data
+select * from Airlines;
+select * from Flights;
+select * from Routes;
+select * from Pilots;
