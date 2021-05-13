@@ -1,0 +1,148 @@
+1.
+Ques:
+ Display the total No. of technical books published in the month of ‘may’ so far	
+
+
+Query:
+select sum(published_copies) from titles where type in('Technical', 'technical');
+
+select sum(published_copies) from titles where type in('Technical', 'technical') and to_char(pub_date,'Month') = 'MAY';
+
+select to_char(pub_date,'Month') pb_mon from titles where to_char(pub_date,'Month') = 'May';
+
+
+Output:
+SUM(PUBLISHED_COPIES)
+---------------------
+
+2.
+Ques:List the authors who belong to particular state. Get the input of state from the user interactively. Allow the user to give state name in any case. 
+
+Query:
+select au_name,state from authors where state = 'maharashtra';
+select au_name,state from authors where state = '&state';
+
+Output:
+AU_NAME              STATE
+-------------------- ---------------
+sahani               maharashtra
+sathe                maharashtra
+gppotdar             maharashtra
+
+3.
+Ques:
+
+Query:
+a) sequence:
+select count(id) from title_author;
+
+create sequence TA_ID
+start with 7
+increment by 1;
+
+insert into title_author values(TA_ID.NEXTVAL,'a5','t4',3);
+
+
+b)
+
+alter table title_author modify NO_OF_EDITIONS Number(5);
+alter table title_author add constraint NOW_Greater_Cons check(NO_OF_EDITIONS > 0);
+
+c)
+select au_id, length(au_id) as len_auid from title_author; 
+
+Output:
+
+Sequence created.
+
+a)
+ID AU_I TITL NO_OF_EDITIONS
+---------- ---- ---- --------------
+         1 a1   t1                4
+         2 a2   t2                3
+         3 a2   t3                4
+         4 a3   t4                3
+         5 a4   t5                2
+         6 a3   t5                2
+         7 a5   t4                3
+
+b)
+Name                                                              Null?    Type
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ ID                                                                NOT NULL NUMBER(2)
+ AU_ID                                                                      CHAR(4)
+ TITLE_ID                                                                   CHAR(4)
+ NO_OF_EDITIONS                                                             NUMBER(5)
+
+c)
+AU_I   LEN_AUID
+---- ----------
+a1            4
+a2            4
+a2            4
+a3            4
+a4            4
+a3            4
+a5            4
+
+4.
+Ques:
+Update the cities with the latest city names of all authors authors using one single SQL command [hint:banglalore is now bengaluru]	
+
+Query:
+
+update authors set city = decode(city,'bangalore','bengaluru', 'pune', 'pune', 'bombay','mumbai','madras','chennai','culcatta','kolkata');
+
+Output:
+ 
+AU_I AU_NAME              PHONE        STREET               CITY       STATE
+---- -------------------- ------------ -------------------- ---------- ---------------
+a1   sahani               020-4214612  kr-road              mumbai     maharashtra
+a2   sathe                020-4214613  karwe road           pune       maharashtra
+a3   manjunath            080-6614614  richmond road        bengaluru  Karnataka
+a4   mani                 044-7715512  Anna salai           chennai    tamil nadu
+a5   gppotdar             022-4414667  s-road               mumbai     maharashtra
+a6   soma                 040-8414667  Jessore Road         kolkata    Westbengal
+
+6 rows selected.
+
+5.
+Ques:
+List the author name who does not belong to Bombay and has published more than 3 editions on various titles
+
+Query:
+
+select * from authors where city <> 'bombay';
+
+select * from from TITLE_AUTHOR where  > 3;
+
+Output:
+
+
+6.
+Ques:
+List the publisher from Maharashtra who has not published any titles
+
+Query:
+
+select pub_name,pub_state from publishers where pub_state = 'maharashtra';
+Output:
+
+
+7.
+Ques:
+Display state wise, city wise number of publishers in ascending order of state
+Query:
+
+select pub_state, pub_city, count(*) from publishers group by pub_state, pub_city order by pub_state asc;
+
+Output:
+
+PUB_STATE            PUB_CITY               COUNT(*)
+-------------------- -------------------- ----------
+madhya pradesh       bhopal                        1
+maharashtra          chennai                       1
+maharashtra          mumbai                        1
+maharashtra          pune                          3
+
+
